@@ -7,7 +7,7 @@ class Browser extends React.Component {
 			term:'',
 			fields:[],
 			autoplay: window.lRead('browser-autoplay', true),
-			page_size: 25,
+			page_size: 100,
 			page: 0,
 			downloading: false
 		};
@@ -113,10 +113,33 @@ class Browser extends React.Component {
 		return out;
 	}
 
+	chunkify_horizontal(a, n) { // Split array [a] into [n] arrays of roughly-equal length.
+		if (n < 2)
+			return [a];
+		if (!a)
+			return [];
+		let len = a.length,	out = [],i = 0, size;
+
+		for(i=0;i<n;i++) {
+			out.push([]);
+		}
+
+		let index = 0;
+		while ( i < len) {
+			out[index].push(a[i]);
+			index++;
+			i++;
+			if (index >= n)
+				index = 0;
+		}
+		return out;
+	}	
+
 	render() {
 		let groups = [];
 		let group = [];
-		let chunks = this.chunkify(this.state.posts, 4, true);
+		//let chunks = this.chunkify(this.state.posts, 4, true);
+		let chunks = this.chunkify_horizontal(this.state.posts, 8);
 		chunks.forEach((ch)=>{
 			ch.forEach((p)=>{
 				group.push(<MediaContainer post={p} key={p.reddit_id} autoplay={this.state.autoplay}/>);
@@ -212,6 +235,11 @@ class MediaContainer extends React.Component {
 		if (e.keyCode === 37) {
 			this._next(e, -1)
 		}
+
+		// ESC
+        if (e.keyCode === 27) {
+            this.setState({lightbox: false})
+        }
 	}
 
 	componentDidMount() {
@@ -335,6 +363,9 @@ class MediaContainer extends React.Component {
 				{special}
 				<div title={this.state.post.title}>
 					{media}
+				</div>
+				<div class='media_title'>
+					[{this.state.post.subreddit}] {this.state.post.title} {this.state.post.post_id}
 				</div>
 			</div>
 		);

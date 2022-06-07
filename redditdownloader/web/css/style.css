@@ -221,7 +221,7 @@ progress:before {
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
-	max-width: 1200px;
+	/* max-width: 1200px; */
 	padding: 15px 35px 50px 35px;
 }
 
@@ -319,8 +319,9 @@ progress:before {
 
 /* Create two equal columns that sits next to each other */
 .img_column {
-	-ms-flex: 25%; /* IE 10 */
-	flex: 25%;
+	/* -ms-flex: 25%;
+	flex: 25%; */
+	flex: 200px;
 	padding: 0 4px;
 }
 
@@ -331,6 +332,12 @@ progress:before {
 	max-width: inherit;
 	max-height: inherit;
 	cursor: pointer;
+}
+
+.img_column .media_title {
+	font-size: small;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
 }
 
 .media_gallery_icon {
