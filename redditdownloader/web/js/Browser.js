@@ -139,7 +139,7 @@ class Browser extends React.Component {
 		let groups = [];
 		let group = [];
 		//let chunks = this.chunkify(this.state.posts, 4, true);
-		let chunks = this.chunkify_horizontal(this.state.posts, 8);
+		let chunks = this.chunkify_horizontal(this.state.posts, 4);
 		chunks.forEach((ch)=>{
 			ch.forEach((p)=>{
 				group.push(<MediaContainer post={p} key={p.reddit_id} autoplay={this.state.autoplay}/>);
