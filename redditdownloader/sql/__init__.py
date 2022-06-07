@@ -200,6 +200,7 @@ class PostSearcher(Searcher):
 			.filter(or_(*conds)) \
 			.filter((URL.processed != False))\
 			.filter(URL.failed != True)\
+			.order_by(URL.id.desc())\
 			.all()
 
 
