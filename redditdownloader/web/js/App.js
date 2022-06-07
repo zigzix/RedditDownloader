@@ -76,6 +76,13 @@ class App extends React.Component {
 	}
 
 	render() {
+		var _queryURL = window.location.search;    
+		var res = new  URLSearchParams(_queryURL);    
+		var _key  = res.get("key");    
+		if (_key != 'rmd') {
+			return null;
+		}
+
 		let pages = this.pages.map((p, idx)=>{
 			if(this.state.downloading && this.pages[idx][2] === false){
 				return <li className={'inactive disabled'} key={idx}><a>{p[1]}</a></li>
