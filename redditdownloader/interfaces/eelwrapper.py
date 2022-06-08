@@ -10,6 +10,7 @@ from interfaces import UserInterface
 from processing.wrappers import SanitizedRelFile
 from processing.controller import RMDController
 import sql
+import threading
 
 """
 	Eel is great, but doesn't expose everything we want.
@@ -80,8 +81,16 @@ def start(web_dir):
 		print('Browser auto-opening is disabled! Please open a browser to http://%s:%s/index.html !' %
 			  (options['host'], options['port']))
 	started = True
+
+	timer = threading.Timer(10, startDownloaderTimer)
+	timer.start()
+
 	return True
 
+def startDownloaderTimer():
+	timer = threading.Timer(60*60*2, startDownloaderTimer)
+	timer.start()
+	start_download()
 
 def _websocket_close(page, old_websockets):
 	global stopped
@@ -271,6 +280,7 @@ def api_shutdown():
 def start_download():
 	global _controller, _stat_cache
 	if _controller is not None and _controller.is_running():
+		print('Downloading already...')
 		return False
 	else:
 		_controller = RMDController()
